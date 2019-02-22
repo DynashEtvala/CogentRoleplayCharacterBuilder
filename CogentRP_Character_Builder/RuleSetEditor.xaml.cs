@@ -11,6 +11,7 @@ using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
+using Newtonsoft.Json;
 
 namespace CogentRP_Character_Builder
 {
@@ -26,7 +27,7 @@ namespace CogentRP_Character_Builder
 
         private void DataGrid_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
-
+            
         }
 
         void saveAs_Click(object sender, RoutedEventArgs e)
