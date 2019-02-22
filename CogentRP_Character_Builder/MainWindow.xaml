@@ -1,0 +1,46 @@
+﻿<Window x:Class="CogentRP_Character_Builder.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:CogentRP_Character_Builder"
+        mc:Ignorable="d"
+        Title="MainWindow" Height="450" Width="800" ResizeMode="CanMinimize">
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="21"/>
+            <RowDefinition/>
+            <RowDefinition Height="42"/>
+        </Grid.RowDefinitions>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition/>
+            <ColumnDefinition/>
+        </Grid.ColumnDefinitions>
+        <DockPanel Grid.ColumnSpan="2">
+            <Menu DockPanel.Dock="Top">
+                <MenuItem Header="_File">
+                    <MenuItem Header="_New">
+                        <MenuItem Header="_Character"/>
+                        <MenuItem Header="_Ruleset"/>
+                    </MenuItem>
+                    <Separator/>
+                    <MenuItem Header="_Import"/>
+                    <Separator/>
+                    <MenuItem Header="_Exit"/>
+                </MenuItem>
+            </Menu>
+        </DockPanel>
+
+        <ListBox HorizontalAlignment="Left" Height="339" Margin="10,10,0,0" VerticalAlignment="Top" Width="377" Grid.Row="1"/>
+        <Button x:Name="btnNewRules" Click="btnNewRules_Click" Content="New" HorizontalAlignment="Left" Margin="10,0,0,10" Width="75" Grid.Row="2" Height="22" VerticalAlignment="Bottom"/>
+        <Button x:Name="btnEditRules" Content="Edit" Margin="0,0,90,10" VerticalAlignment="Bottom" HorizontalAlignment="Right" Width="75" Grid.Row="2" Height="22"/>
+        <Button x:Name="btnDeleteRules" Content="Delete" Margin="0,0,10,10" VerticalAlignment="Bottom" HorizontalAlignment="Right" Width="75" Grid.Row="2" Height="22"/>
+
+        <ListBox HorizontalAlignment="Left" Height="339" Margin="10,10,0,0" VerticalAlignment="Top" Width="377" Grid.Row="1" Grid.Column="1"/>
+        <Button x:Name="btnNewCharacter" Content="New" HorizontalAlignment="Left" Margin="10,0,0,10" Width="75" Grid.Row="2" Height="22" VerticalAlignment="Bottom" Grid.Column="1"/>
+        <Button x:Name="btnEditCharacter" Content="Edit" Margin="0,0,90,10" VerticalAlignment="Bottom" HorizontalAlignment="Right" Width="75" Grid.Row="2" Height="22" Grid.Column="1"/>
+        <Button x:Name="btnDeleteCharacter" Content="Delete" Margin="0,0,10,10" VerticalAlignment="Bottom" HorizontalAlignment="Right" Width="75" Grid.Row="2" Height="22" Grid.Column="1"/>
+        <Button x:Name="btnViewCharacter" Content="View" Margin="0,0,170,10" VerticalAlignment="Bottom" HorizontalAlignment="Right" Width="75" Grid.Row="2" Height="22" Grid.Column="1"/>
+
+    </Grid>
+</Window>
