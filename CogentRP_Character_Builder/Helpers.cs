@@ -10,6 +10,59 @@ namespace CogentRP_Character_Builder
     {
         struct Ruleset
         {
+            private struct SkillType
+            {
+                private struct ActiveAttributes
+                {
+                    bool strength;
+                    bool reflex;
+                    bool intelligence;
+                }
+                string name;
+                ActiveAttributes activeAttributes;
+                string[] skills;
+            }
+
+            struct CustomField
+            {
+                string name;
+                bool fieldIsOptional;
+                int defaultVal;
+                bool modifiableDuringCreation;
+                int spCost;
+                bool modifiableDuringPlay;
+            }
+
+            struct DisablingCharacteristic
+            {
+                private struct SkillTypeModifier
+                {
+                    int skillTypeIndex;
+                    int diceReduction;
+                    int spCostMult;
+                }
+                private struct SkillModifier
+                {
+                    int skillTypeIndex;
+                    int skillIndex;
+                    int diceReduction;
+                    int spCostMult;
+                }
+                private struct CustomFieldModifier
+                {
+                    int fieldIndex;
+                    int valMod;
+                    int spCostMult;
+                    bool disableField;
+                }
+                
+                string name;
+                int spVal;
+                SkillTypeModifier[] skillTypeModifiers;
+                SkillModifier[] skillModifiers;
+                CustomFieldModifier[] customFieldModifiers;
+            }
+
             string name;
             int attPoints;
             int skillPoints;
@@ -20,58 +73,6 @@ namespace CogentRP_Character_Builder
             string[] proficiencies;
             CustomField[] customFields;
             DisablingCharacteristic[] disablingCharacteristics;
-        }
-
-        struct SkillType
-        {
-            private struct ActiveAttributes
-            {
-                bool strength;
-                bool reflex;
-                bool intelligence;
-            }
-            string name;
-            ActiveAttributes activeAttributes;
-            String[] skills;
-        }
-
-        struct CustomField
-        {
-            string name;
-            bool fieldIsOptional;
-            int defaultVal;
-            bool modifiableDuringCreation;
-            int spCost;
-            bool modifiableDuringPlay;
-        }
-
-        struct DisablingCharacteristic
-        {
-            private struct SkillTypeModifier
-            {
-                int skillTypeIndex;
-                int diceReduction;
-                int spCostMult;
-            }
-            private struct SkillModifier
-            {
-                int skillTypeIndex;
-                int skillIndex;
-                int diceReduction;
-                int spCostMult;
-            }
-            private struct CustomFieldModifier
-            {
-                int fieldIndex;
-                int valMod;
-                int spCostMult;
-                bool disableField;
-            }
-            string name;
-            int spVal;
-            SkillTypeModifier[] skillTypeModifiers;
-            SkillModifier[] skillModifiers;
-            CustomFieldModifier[] customFieldModifiers;
         }
     }
 }

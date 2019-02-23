@@ -54,27 +54,31 @@
 
                 <Label Content="Skill Types:"/>
                 <StackPanel x:Name="stkSkillTypes" Margin="40,0,0,0">
+                    <Separator/>
                 </StackPanel>
-                <Button x:Name="btnAddNewST" Content="Add New" Width="75"/>
+                <Button x:Name="btnAddNewST" Click="btnAddNewST_Click" Content="Add New" Width="75"/>
 
                 <Separator/>
 
                 <Label Content="Vocations:"/>
                 <StackPanel x:Name="stkVocations" Margin="40,0,0,0">
+                    <Separator/>
                 </StackPanel>
-                <Button x:Name="btnAddNewVoc" Content="Add New" Width="75"/>
+                <Button x:Name="btnAddNewVoc" Click="btnAddNewVoc_Click" Content="Add New" Width="75"/>
 
                 <Separator/>
 
                 <Label Content="Proficiencies:"/>
                 <StackPanel x:Name="stkProficiencies" Margin="40,0,0,0">
+                    <Separator/>
                 </StackPanel>
-                <Button x:Name="btnAddNewProf" Content="Add New" Width="75"/>
+                <Button x:Name="btnAddNewProf" Click="btnAddNewProf_Click" Content="Add New" Width="75"/>
 
                 <Separator/>
 
                 <Label Content="Extra Fields:"/>
                 <StackPanel x:Name="stkExtraFields" Margin="40,0,0,0">
+                    <Separator/>
                 </StackPanel>
                 <Button x:Name="btnAddNewExtraField" Content="Add New" Width="75"/>
             </StackPanel>

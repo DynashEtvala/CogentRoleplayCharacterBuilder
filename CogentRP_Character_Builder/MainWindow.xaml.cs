@@ -27,7 +27,6 @@ namespace CogentRP_Character_Builder
 
         void btnNewRules_Click(object sender, RoutedEventArgs e)
         {
-            MessageBox.Show("New Ruleset");
             RuleSetEditor ruleSetEditor = new RuleSetEditor();
             ruleSetEditor.Show();
         }
