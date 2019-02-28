@@ -26,11 +26,8 @@ namespace CogentRP_Character_Builder
             struct CustomField
             {
                 string name;
-                bool fieldIsOptional;
                 int defaultVal;
-                bool modifiableDuringCreation;
-                int spCost;
-                bool modifiableDuringPlay;
+                bool fieldIsOptional;
             }
 
             struct DisablingCharacteristic

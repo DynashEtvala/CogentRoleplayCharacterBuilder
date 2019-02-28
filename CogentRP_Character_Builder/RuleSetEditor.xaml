@@ -76,11 +76,11 @@
 
                 <Separator/>
 
-                <Label Content="Extra Fields:"/>
-                <StackPanel x:Name="stkExtraFields" Margin="40,0,0,0">
+                <Label Content="Custom Fields:"/>
+                <StackPanel x:Name="stkCustomFields" Margin="40,0,0,0">
                     <Separator/>
                 </StackPanel>
-                <Button x:Name="btnAddNewExtraField" Content="Add New" Width="75"/>
+                <Button x:Name="btnAddNewCustomField" Click="btnAddNewCustomField_Click" Content="Add New" Width="75"/>
             </StackPanel>
         </ScrollViewer>
     </Grid>
