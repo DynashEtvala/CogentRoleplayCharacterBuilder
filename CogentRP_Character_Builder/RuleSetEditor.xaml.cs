@@ -20,6 +20,7 @@ namespace CogentRP_Character_Builder
     /// </summary>
     public partial class RuleSetEditor : Window
     {
+        #region Sub-Classes
         /// <summary>
         /// A TextBox with a preceding Label.
         /// </summary>
@@ -29,6 +30,7 @@ namespace CogentRP_Character_Builder
             //Variables
             //--------------------------------------------
 
+            Panel parent;
             Grid grid;
             Label label;
             TextBox textBox;
@@ -37,9 +39,10 @@ namespace CogentRP_Character_Builder
             //Constructors
             //--------------------------------------------
 
-            public LabeledTextBox(Panel parent, string name)
+            public LabeledTextBox(Panel _parent, string name)
             {
                 //Initialize Variables
+                parent = _parent;
                 grid = new Grid();
                 label = new Label();
                 textBox = new TextBox();
@@ -71,10 +74,10 @@ namespace CogentRP_Character_Builder
             //Functions
             //--------------------------------------------
 
-                ///<summary>
-                ///Updates the layouts of UI elements to align properly.
-                ///</summary>
-            public void FixLayout() 
+            ///<summary>
+            ///Updates the layouts of UI elements to align properly.
+            ///</summary>
+            public void FixLayout()
             {
                 grid.UpdateLayout();
                 label.UpdateLayout();
@@ -82,13 +85,21 @@ namespace CogentRP_Character_Builder
                 textBox.Margin = new Thickness(label.ActualWidth + 10, 0, 5, 0);
             }
 
+            /// <summary>
+            /// Removes all parent/child connections within and to this object.
+            /// </summary>
+            public void Remove()
+            {
+                parent.Children.Remove(grid);
+            }
+
             //--------------------------------------------
             //Properties
             //--------------------------------------------
 
-                /// <summary>
-                /// Gets or sets the text contents of the text box.
-                /// </summary>
+            /// <summary>
+            /// Gets or sets the text contents of the text box.
+            /// </summary>
             public string Text
             {
                 get { return textBox.Text; }
@@ -105,6 +116,7 @@ namespace CogentRP_Character_Builder
             //Variables
             //--------------------------------------------
 
+            Panel parent;
             Grid grid;
             Label label;
             CheckBox checkBox;
@@ -113,9 +125,10 @@ namespace CogentRP_Character_Builder
             //Constructors
             //--------------------------------------------
 
-            public LabeledCheckBox(Panel parent, string name)
+            public LabeledCheckBox(Panel _parent, string name)
             {
                 //Initialize Variables
+                parent = _parent;
                 grid = new Grid();
                 label = new Label();
                 checkBox = new CheckBox();
@@ -158,6 +171,14 @@ namespace CogentRP_Character_Builder
                 checkBox.Margin = new Thickness(label.ActualWidth + 10, 5, 0, 0);
             }
 
+            /// <summary>
+            /// Removes all parent/child connections within and to this object.
+            /// </summary>
+            public void Remove()
+            {
+                parent.Children.RemoveAt(0);
+            }
+
             //--------------------------------------------
             //Properties
             //--------------------------------------------
@@ -181,6 +202,7 @@ namespace CogentRP_Character_Builder
             //Variables
             //--------------------------------------------
 
+            Panel parent;
             Label typeNum;
             StackPanel typePanel;
             LabeledTextBox name;
@@ -194,16 +216,19 @@ namespace CogentRP_Character_Builder
             Label skillLabel;
             StackPanel skillPanel;
             List<LabeledTextBox> skillList;
-            Button skillButton;
+            Grid skillButtonGrid;
+            Button addSkillButton;
+            Button removeSkillButton;
             Separator separator3;
 
             //--------------------------------------------
             //Constructors
             //--------------------------------------------
 
-            public RseSkillType(Panel parent, int count)
+            public RseSkillType(Panel _parent, int count)
             {
                 //Initialize Variables
+                parent = _parent;
                 typeNum = new Label();
                 typePanel = new StackPanel();
                 name = new LabeledTextBox(typePanel, "Name:");
@@ -217,7 +242,9 @@ namespace CogentRP_Character_Builder
                 skillLabel = new Label();
                 skillPanel = new StackPanel();
                 skillList = new List<LabeledTextBox>();
-                skillButton = new Button();
+                skillButtonGrid = new Grid();
+                addSkillButton = new Button();
+                removeSkillButton = new Button();
                 separator3 = new Separator();
 
                 //Add relevent elements to parent panel
@@ -240,7 +267,7 @@ namespace CogentRP_Character_Builder
                 typePanel.Children.Add(separator2);
                 typePanel.Children.Add(skillLabel);
                 typePanel.Children.Add(skillPanel);
-                typePanel.Children.Add(skillButton);
+                typePanel.Children.Add(skillButtonGrid);
 
                 //Update the layout of the name textbox
                 name.FixLayout();
@@ -272,24 +299,104 @@ namespace CogentRP_Character_Builder
                 //Define the format panel for the skill list
                 skillPanel.Margin = new Thickness(40, 0, 0, 0);
 
+                //Define and add children for Button Grid
+                skillButtonGrid.Height = 22;
+                skillButtonGrid.ColumnDefinitions.Add(new ColumnDefinition());
+                skillButtonGrid.ColumnDefinitions.Add(new ColumnDefinition());
+                skillButtonGrid.Children.Add(addSkillButton);
+                skillButtonGrid.Children.Add(removeSkillButton);
+
                 //Define the button for adding new skills to the skill list
-                skillButton.Width = 75;
-                skillButton.Content = "Add New";
-                skillButton.Click += btnAddSkill_Click;
+                addSkillButton.Width = 75;
+                addSkillButton.Content = "Add New";
+                addSkillButton.Click += btnAddSkill_Click;
+                Grid.SetColumn(addSkillButton, 0);
+
+                //Define the button for removing skills from the skill list
+                removeSkillButton.Width = 75;
+                removeSkillButton.Content = "Remove";
+                removeSkillButton.Click += btnRemoveSkill_Click;
+                Grid.SetColumn(removeSkillButton, 1);
+            }
+
+            //--------------------------------------------
+            //Functions
+            //--------------------------------------------
+
+            /// <summary>
+            /// Removes all parent/child connections within and to this object.
+            /// </summary>
+            public void Remove()
+            {
+                parent.Children.Remove(typeNum);
+                parent.Children.Remove(typePanel);
+                parent.Children.Remove(separator3);
             }
 
             //--------------------------------------------
             //Button Functions
             //--------------------------------------------
 
-                /// <summary>
-                /// Adds a new LabeledTextBox to the skillList and skillPanel when called.
-                /// </summary>
-                /// <param name="sender"></param>
-                /// <param name="e"></param>
+            /// <summary>
+            /// Adds a new LabeledTextBox to the skillList and skillPanel when called.
+            /// </summary>
+            /// <param name="sender"></param>
+            /// <param name="e"></param>
             private void btnAddSkill_Click(object sender, RoutedEventArgs e)
             {
                 skillList.Add(new LabeledTextBox(skillPanel, skillList.Count + ":"));
+            }
+
+            private void btnRemoveSkill_Click(object sender, RoutedEventArgs e)
+            {
+                skillList[skillList.Count - 1].Remove();
+                skillList.RemoveAt(skillList.Count - 1);
+            }
+
+            //--------------------------------------------
+            //Properties
+            //--------------------------------------------
+
+            /// <summary>
+            /// Gets or sets the contents of the Name TextBox.
+            /// </summary>
+            public string Name
+            {
+                get { return name.Text; }
+                set { name.Text = value; }
+            }
+
+            /// <summary>
+            /// Gets or sets whether the strength CheckBox is checked.
+            /// </summary>
+            public bool? Strength
+            {
+                get { return strength.IsChecked; }
+                set { strength.IsChecked = value; }
+            }
+
+            /// <summary>
+            /// Gets or sets whether the reflex CheckBox is checked.
+            /// </summary>
+            public bool? Reflex
+            {
+                get { return reflex.IsChecked; }
+                set { reflex.IsChecked = value; }
+            }
+
+            /// <summary>
+            /// Gets or sets whether the intelligence CheckBox is checked.
+            /// </summary>
+            public bool? Intelligence
+            {
+                get { return intelligence.IsChecked; }
+                set { intelligence.IsChecked = value; }
+            }
+
+            public List<LabeledTextBox> Skills
+            {
+                get { return skillList; }
+                set { skillList = value; }
             }
         }
 
@@ -302,6 +409,7 @@ namespace CogentRP_Character_Builder
             //Variables
             //--------------------------------------------
 
+            Panel parent;
             Label fieldNum;
             StackPanel fieldPanel;
             LabeledTextBox name;
@@ -313,8 +421,10 @@ namespace CogentRP_Character_Builder
             //Constructors
             //--------------------------------------------
 
-            public RseCustomField(Panel parent, int count)
+            public RseCustomField(Panel _parent, int count)
             {
+                //Initialize Variables
+                parent = _parent;
                 fieldNum = new Label();
                 fieldPanel = new StackPanel();
                 name = new LabeledTextBox(fieldPanel, "Name:");
@@ -322,30 +432,60 @@ namespace CogentRP_Character_Builder
                 isOptional = new LabeledCheckBox(fieldPanel, "Field is Optional:");
                 separator = new Separator();
 
+                //Add relevent elements to parent panel
                 parent.Children.Add(fieldNum);
                 parent.Children.Add(fieldPanel);
                 parent.Children.Add(separator);
 
+                //Define Index Label
                 fieldNum.Content = count + ":";
                 fieldNum.Height = 22;
                 fieldNum.HorizontalAlignment = HorizontalAlignment.Left;
                 fieldNum.Padding = new Thickness(0);
                 fieldNum.VerticalContentAlignment = VerticalAlignment.Center;
 
+                //Define Panel for UI elements
                 fieldPanel.Margin = new Thickness(40, 0, 0, 0);
 
+                //Update layout for UI fields
                 name.FixLayout();
 
                 defVal.FixLayout();
 
                 isOptional.FixLayout();
             }
+
+            //--------------------------------------------
+            //Functions
+            //--------------------------------------------
+
+            /// <summary>
+            /// Removes all parent/child connections within and to this object.
+            /// </summary>
+            public void Remove()
+            {
+                parent.Children.Remove(fieldNum);
+                parent.Children.Remove(fieldPanel);
+                parent.Children.Remove(separator);
+            }
         }
 
-        private class RseDisablingCharacteristics
+        /// <summary>
+        /// A block of UI elements representing a disabling characteristic.
+        /// </summary>
+        private class RseDisablingCharacteristic
         {
-            public class RseSkillTypeModifier
+            #region Sub-Classes
+            /// <summary>
+            /// A block of UI elements within an RseDisablingCharacteristic representing modifiers to a specific Skill Type.
+            /// </summary>
+            private class RseSkillTypeModifier
             {
+                //--------------------------------------------
+                //Variables
+                //--------------------------------------------
+
+                Panel parent;
                 Label modNum;
                 StackPanel modPanel;
                 LabeledTextBox typeIndex;
@@ -353,8 +493,14 @@ namespace CogentRP_Character_Builder
                 LabeledTextBox spCostMult;
                 Separator separator;
 
-                RseSkillTypeModifier(Panel parent, int count)
+                //--------------------------------------------
+                //Constructors
+                //--------------------------------------------
+
+                public RseSkillTypeModifier(Panel _parent, int count)
                 {
+                    //Initialize Variables
+                    parent = _parent;
                     modNum = new Label();
                     modPanel = new StackPanel();
                     typeIndex = new LabeledTextBox(modPanel, "Skill Type Index:");
@@ -362,38 +508,428 @@ namespace CogentRP_Character_Builder
                     spCostMult = new LabeledTextBox(modPanel, "Skill Cost Multiplier:");
                     separator = new Separator();
 
+                    //Add relevent elements to parent Panel
                     parent.Children.Add(modNum);
                     parent.Children.Add(modPanel);
                     parent.Children.Add(separator);
 
+                    //Define index Label
                     modNum.Content = count + ":";
                     modNum.Height = 22;
                     modNum.HorizontalAlignment = HorizontalAlignment.Left;
                     modNum.Padding = new Thickness(0);
                     modNum.VerticalContentAlignment = VerticalAlignment.Center;
 
+                    //Define Panel for UI elements
                     modPanel.Margin = new Thickness(40, 0, 0, 0);
 
+                    //Update layout of UI elements
                     typeIndex.FixLayout();
 
                     diceReduction.FixLayout();
 
                     spCostMult.FixLayout();
                 }
+
+                //--------------------------------------------
+                //Functions
+                //--------------------------------------------
+
+                public void Remove()
+                {
+                    parent.Children.Remove(modNum);
+                    parent.Children.Remove(modPanel);
+                    parent.Children.Remove(separator);
+                }
             }
-            Label charNum;
-            StackPanel charPanel;
+
+            /// <summary>
+            /// A block of UI elements within an RseDisablingCharacteristic representing modifiers to a specific Skill within a SkillType. 
+            /// </summary>
+            private class RseSkillModifier
+            {
+                //--------------------------------------------
+                //Variables
+                //--------------------------------------------
+
+                Panel parent;
+                Label modNum;
+                StackPanel modPanel;
+                LabeledTextBox typeIndex;
+                LabeledTextBox skillIndex;
+                LabeledTextBox diceReduction;
+                LabeledTextBox spCostMult;
+                Separator separator;
+
+                //--------------------------------------------
+                //Constructors
+                //--------------------------------------------
+
+                public RseSkillModifier(Panel _parent, int count)
+                {
+                    //Initialize Variables
+                    parent = _parent;
+                    modNum = new Label();
+                    modPanel = new StackPanel();
+                    typeIndex = new LabeledTextBox(modPanel, "Skill Type Index:");
+                    skillIndex = new LabeledTextBox(modPanel, "Skill Index:");
+                    diceReduction = new LabeledTextBox(modPanel, "Dice Reduction:");
+                    spCostMult = new LabeledTextBox(modPanel, "Skill Cost Multiplier:");
+                    separator = new Separator();
+
+                    //Add relevent elements to parent Panel
+                    parent.Children.Add(modNum);
+                    parent.Children.Add(modPanel);
+                    parent.Children.Add(separator);
+
+                    //Define index Label
+                    modNum.Content = count + ":";
+                    modNum.Height = 22;
+                    modNum.HorizontalAlignment = HorizontalAlignment.Left;
+                    modNum.Padding = new Thickness(0);
+                    modNum.VerticalContentAlignment = VerticalAlignment.Center;
+
+                    //Define Panel for UI elements
+                    modPanel.Margin = new Thickness(40, 0, 0, 0);
+
+                    //Update layout of UI elements
+                    typeIndex.FixLayout();
+
+                    skillIndex.FixLayout();
+
+                    diceReduction.FixLayout();
+
+                    spCostMult.FixLayout();
+                }
+
+                //--------------------------------------------
+                //Functions
+                //--------------------------------------------
+
+                public void Remove()
+                {
+                    parent.Children.Remove(modNum);
+                    parent.Children.Remove(modPanel);
+                    parent.Children.Remove(separator);
+                }
+            }
+
+            /// <summary>
+            /// A block of UI elements within an RseDisablingCharacteristic representing modifiers to a CustomField.
+            /// </summary>
+            private class RseCustomFieldModifier
+            {
+                //--------------------------------------------
+                //Variables
+                //--------------------------------------------
+
+                Panel parent;
+                Label modNum;
+                StackPanel modPanel;
+                LabeledTextBox fieldIndex;
+                LabeledTextBox valMod;
+                LabeledCheckBox disableField;
+                Separator separator;
+
+                //--------------------------------------------
+                //Constructors
+                //--------------------------------------------
+
+                public RseCustomFieldModifier(Panel _parent, int count)
+                {
+                    //Initialize Variables
+                    parent = _parent;
+                    modNum = new Label();
+                    modPanel = new StackPanel();
+                    fieldIndex = new LabeledTextBox(modPanel, "Custom Field Index:");
+                    valMod = new LabeledTextBox(modPanel, "Value Modifier:");
+                    disableField = new LabeledCheckBox(modPanel, "Disable Field:");
+                    separator = new Separator();
+
+                    //Add relevent elements to parent Panel
+                    parent.Children.Add(modNum);
+                    parent.Children.Add(modPanel);
+                    parent.Children.Add(separator);
+
+                    //Define index Label
+                    modNum.Content = count + ":";
+                    modNum.Height = 22;
+                    modNum.HorizontalAlignment = HorizontalAlignment.Left;
+                    modNum.Padding = new Thickness(0);
+                    modNum.VerticalContentAlignment = VerticalAlignment.Center;
+
+                    //Define Panel for UI elements
+                    modPanel.Margin = new Thickness(40, 0, 0, 0);
+
+                    //Update layout of UI elements
+                    fieldIndex.FixLayout();
+
+                    valMod.FixLayout();
+
+                    disableField.FixLayout();
+                }
+
+                //--------------------------------------------
+                //Functions
+                //--------------------------------------------
+
+                public void Remove()
+                {
+                    parent.Children.Remove(modNum);
+                    parent.Children.Remove(modPanel);
+                    parent.Children.Remove(separator);
+                }
+            }
+            #endregion
+
+            //--------------------------------------------
+            //Variables
+            //--------------------------------------------
+
+            Panel parent;
+            Label disCharNum;
+            StackPanel disCharPanel;
             LabeledTextBox name;
             LabeledTextBox spVal;
+            Separator separator1;
+            Label skillTypeModLabel;
+            StackPanel skillTypeModPanel;
+            List<RseSkillTypeModifier> rseSkillTypeModifiers;
+            Grid skillTypeModButtonGrid;
+            Button addSkillTypeModButton;
+            Button removeSkillTypeModButton;
+            Separator separator2;
+            Label skillModLabel;
+            StackPanel skillModPanel;
+            List<RseSkillModifier> rseSkillModifiers;
+            Grid skillModButtonGrid;
+            Button addSkillModButton;
+            Button removeSkillModButton;
+            Separator separator3;
+            Label customFieldModLabel;
+            StackPanel customFieldModPanel;
+            List<RseCustomFieldModifier> rseCustomFieldModifiers;
+            Grid customFieldModButtonGrid;
+            Button addCustomFieldModButton;
+            Button removeCustomFieldModButton;
+            Separator separator4;
 
+            //--------------------------------------------
+            //Constructors
+            //--------------------------------------------
 
+            public RseDisablingCharacteristic(Panel _parent, int count)
+            {
+                //Initialize Variables
+                parent = _parent;
+                disCharNum = new Label();
+                disCharPanel = new StackPanel();
+                name = new LabeledTextBox(disCharPanel, "Name:");
+                spVal = new LabeledTextBox(disCharPanel, "Skill Point Value:");
+                separator1 = new Separator();
+                skillTypeModLabel = new Label();
+                skillTypeModPanel = new StackPanel();
+                rseSkillTypeModifiers = new List<RseSkillTypeModifier>();
+                skillTypeModButtonGrid = new Grid();
+                addSkillTypeModButton = new Button();
+                removeSkillTypeModButton = new Button();
+                separator2 = new Separator();
+                skillModLabel = new Label();
+                skillModPanel = new StackPanel();
+                rseSkillModifiers = new List<RseSkillModifier>();
+                skillModButtonGrid = new Grid();
+                addSkillModButton = new Button();
+                removeSkillModButton = new Button();
+                separator3 = new Separator();
+                customFieldModLabel = new Label();
+                customFieldModPanel = new StackPanel();
+                rseCustomFieldModifiers = new List<RseCustomFieldModifier>();
+                customFieldModButtonGrid = new Grid();
+                addCustomFieldModButton = new Button();
+                removeCustomFieldModButton = new Button();
+                separator4 = new Separator();
 
+                //Add relevent elements as children to parent Panel
+                parent.Children.Add(disCharNum);
+                parent.Children.Add(disCharPanel);
+                parent.Children.Add(separator4);
+
+                //Define index Label
+                disCharNum.Content = count + ":";
+                disCharNum.Height = 22;
+                disCharNum.HorizontalAlignment = HorizontalAlignment.Left;
+                disCharNum.Padding = new Thickness(0);
+                disCharNum.VerticalContentAlignment = VerticalAlignment.Center;
+
+                //Define main StackPanel and relevent children
+                disCharPanel.Margin = new Thickness(40, 0, 0, 0);
+                disCharPanel.Children.Add(separator1);
+                disCharPanel.Children.Add(skillTypeModLabel);
+                disCharPanel.Children.Add(skillTypeModPanel);
+                disCharPanel.Children.Add(skillTypeModButtonGrid);
+                disCharPanel.Children.Add(separator2);
+                disCharPanel.Children.Add(skillModLabel);
+                disCharPanel.Children.Add(skillModPanel);
+                disCharPanel.Children.Add(skillModButtonGrid);
+                disCharPanel.Children.Add(separator3);
+                disCharPanel.Children.Add(customFieldModLabel);
+                disCharPanel.Children.Add(customFieldModPanel);
+                disCharPanel.Children.Add(customFieldModButtonGrid);
+
+                //Update textbox layouts
+                name.FixLayout();
+
+                spVal.FixLayout();
+
+                //Define Labels
+                skillTypeModLabel.Content = "Skill Type Modifiers:";
+                skillTypeModLabel.Height = 22;
+                skillTypeModLabel.HorizontalAlignment = HorizontalAlignment.Left;
+                skillTypeModLabel.Padding = new Thickness(0);
+                skillTypeModLabel.VerticalContentAlignment = VerticalAlignment.Center;
+
+                skillModLabel.Content = "Skill Modifiers:";
+                skillModLabel.Height = 22;
+                skillModLabel.HorizontalAlignment = HorizontalAlignment.Left;
+                skillModLabel.Padding = new Thickness(0);
+                skillModLabel.VerticalContentAlignment = VerticalAlignment.Center;
+
+                customFieldModLabel.Content = "Custom Field Modifiers:";
+                customFieldModLabel.Height = 22;
+                customFieldModLabel.HorizontalAlignment = HorizontalAlignment.Left;
+                customFieldModLabel.Padding = new Thickness(0);
+                customFieldModLabel.VerticalContentAlignment = VerticalAlignment.Center;
+
+                //Define list StackPanels
+                skillTypeModPanel.Margin = new Thickness(40, 0, 0, 0);
+
+                skillModPanel.Margin = new Thickness(40, 0, 0, 0);
+
+                customFieldModPanel.Margin = new Thickness(40, 0, 0, 0);
+
+                //Define list Buttons
+
+                //SkillTypeMod
+                skillTypeModButtonGrid.Height = 22;
+                skillTypeModButtonGrid.ColumnDefinitions.Add(new ColumnDefinition());
+                skillTypeModButtonGrid.ColumnDefinitions.Add(new ColumnDefinition());
+                skillTypeModButtonGrid.Children.Add(addSkillTypeModButton);
+                skillTypeModButtonGrid.Children.Add(removeSkillTypeModButton);
+                
+                addSkillTypeModButton.Width = 75;
+                addSkillTypeModButton.Content = "Add New";
+                addSkillTypeModButton.Click += btnAddSkillTypeMod_Click;
+                Grid.SetColumn(addSkillTypeModButton, 0);
+                
+                removeSkillTypeModButton.Width = 75;
+                removeSkillTypeModButton.Content = "Remove";
+                removeSkillTypeModButton.Click += btnRemoveSkillTypeMod_Click;
+                Grid.SetColumn(removeSkillTypeModButton, 1);
+
+                //SkillMod
+                skillModButtonGrid.Height = 22;
+                skillModButtonGrid.ColumnDefinitions.Add(new ColumnDefinition());
+                skillModButtonGrid.ColumnDefinitions.Add(new ColumnDefinition());
+                skillModButtonGrid.Children.Add(addSkillModButton);
+                skillModButtonGrid.Children.Add(removeSkillModButton);
+
+                addSkillModButton.Width = 75;
+                addSkillModButton.Content = "Add New";
+                addSkillModButton.Click += btnAddSkillMod_Click;
+                Grid.SetColumn(addSkillModButton, 0);
+
+                removeSkillModButton.Width = 75;
+                removeSkillModButton.Content = "Remove";
+                removeSkillModButton.Click += btnRemoveSkillMod_Click;
+                Grid.SetColumn(removeSkillModButton, 1);
+
+                //CustomFieldMod
+                customFieldModButtonGrid.Height = 22;
+                customFieldModButtonGrid.ColumnDefinitions.Add(new ColumnDefinition());
+                customFieldModButtonGrid.ColumnDefinitions.Add(new ColumnDefinition());
+                customFieldModButtonGrid.Children.Add(addCustomFieldModButton);
+                customFieldModButtonGrid.Children.Add(removeCustomFieldModButton);
+
+                addCustomFieldModButton.Width = 75;
+                addCustomFieldModButton.Content = "Add New";
+                addCustomFieldModButton.Click += btnAddCustomFieldMod_Click;
+                Grid.SetColumn(addCustomFieldModButton, 0);
+
+                removeCustomFieldModButton.Width = 75;
+                removeCustomFieldModButton.Content = "Remove";
+                removeCustomFieldModButton.Click += btnRemoveCustomFieldMod_Click;
+                Grid.SetColumn(removeCustomFieldModButton, 1);
+            }
+
+            //--------------------------------------------
+            //Functions
+            //--------------------------------------------
+
+            /// <summary>
+            /// Removes all parent/child connections within and to this object.
+            /// </summary>
+            public void Remove()
+            {
+                parent.Children.Remove(disCharNum);
+                parent.Children.Remove(disCharPanel);
+                parent.Children.Remove(separator4);
+            }
+
+            //--------------------------------------------
+            //Button Functions
+            //--------------------------------------------
+
+            //SkillTypeMod
+            private void btnAddSkillTypeMod_Click(object sender, RoutedEventArgs e)
+            {
+                rseSkillTypeModifiers.Add(new RseSkillTypeModifier(skillTypeModPanel, rseSkillTypeModifiers.Count));
+            }
+
+            private void btnRemoveSkillTypeMod_Click(object sender, RoutedEventArgs e)
+            {
+                rseSkillTypeModifiers[rseSkillTypeModifiers.Count - 1].Remove();
+                rseSkillTypeModifiers.RemoveAt(rseSkillTypeModifiers.Count - 1);
+            }
+
+            //SkillMod
+            private void btnAddSkillMod_Click(object sender, RoutedEventArgs e)
+            {
+                rseSkillModifiers.Add(new RseSkillModifier(skillModPanel, rseSkillModifiers.Count));
+            }
+
+            private void btnRemoveSkillMod_Click(object sender, RoutedEventArgs e)
+            {
+                rseSkillModifiers[rseSkillModifiers.Count - 1].Remove();
+                rseSkillModifiers.RemoveAt(rseSkillModifiers.Count - 1);
+            }
+
+            //CustomFieldMod
+            private void btnAddCustomFieldMod_Click(object sender, RoutedEventArgs e)
+            {
+                rseCustomFieldModifiers.Add(new RseCustomFieldModifier(customFieldModPanel, rseCustomFieldModifiers.Count));
+            }
+
+            private void btnRemoveCustomFieldMod_Click(object sender, RoutedEventArgs e)
+            {
+                rseCustomFieldModifiers[rseCustomFieldModifiers.Count - 1].Remove();
+                rseCustomFieldModifiers.RemoveAt(rseCustomFieldModifiers.Count - 1);
+            }
         }
+        #endregion
+
+        //--------------------------------------------
+        //Variables
+        //--------------------------------------------
 
         List<RseSkillType> rseSkillTypes;
         List<LabeledTextBox> rseVocations;
         List<LabeledTextBox> rseProficiencies;
         List<RseCustomField> rseCustomFields;
+        List<RseDisablingCharacteristic> rseDisablingCharacteristics;
+
+        //--------------------------------------------
+        //Constructors
+        //--------------------------------------------
 
         public RuleSetEditor()
         {
@@ -402,36 +938,129 @@ namespace CogentRP_Character_Builder
             rseVocations = new List<LabeledTextBox>();
             rseProficiencies = new List<LabeledTextBox>();
             rseCustomFields = new List<RseCustomField>();
+            rseDisablingCharacteristics = new List<RseDisablingCharacteristic>();
         }
 
-        private void DataGrid_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        //--------------------------------------------
+        //File Functions
+        //--------------------------------------------
+
+        void save_Click(object sender, RoutedEventArgs e)
         {
-            
+            Helpers.Ruleset ruleset = new Helpers.Ruleset();
+
+            if (((TextBox)this.FindName("tbName")).Text.Length > 0)
+            {
+                ruleset.name = ((TextBox)this.FindName("tbName")).Text;
+            }
+            else
+            {
+                return;
+            }
+
+            if (((TextBox)this.FindName("tbAttPoints")).Text.Length > 0 && !int.TryParse(((TextBox)this.FindName("tbAttPoints")).Text, out ruleset.attPoints))
+            {
+                return;
+            }
+
+            if (((TextBox)this.FindName("tbSkillPoints")).Text.Length > 0 && !int.TryParse(((TextBox)this.FindName("tbSkillPoints")).Text, out ruleset.skillPoints))
+            {
+                return;
+            }
+
+            if (((TextBox)this.FindName("tbSpInt")).Text.Length > 0 && !int.TryParse(((TextBox)this.FindName("tbSpInt")).Text, out ruleset.attPoints))
+            {
+                return;
+            }
+
+            if (((TextBox)this.FindName("tbDestPoints")).Text.Length > 0 && !int.TryParse(((TextBox)this.FindName("tbDestPoints")).Text, out ruleset.attPoints))
+            {
+                return;
+            }
+
+            for(int i = 0; i < rseSkillTypes.Count; i++)
+            {
+                ruleset.skillTypes.Add(new Helpers.Ruleset.SkillType());
+            }
         }
 
-        void saveAs_Click(object sender, RoutedEventArgs e)
-        {
+        //--------------------------------------------
+        //Button Functions
+        //--------------------------------------------
 
-        }
-
+        //Skill Type Buttons
         void btnAddNewST_Click(object sender, RoutedEventArgs e)
         {
             rseSkillTypes.Add(new RseSkillType((StackPanel)this.FindName("stkSkillTypes"), rseSkillTypes.Count));
         }
 
+        void btnRemoveST_Click(object sender, RoutedEventArgs e)
+        {
+            if (rseSkillTypes.Count > 0)
+            {
+                rseSkillTypes[rseSkillTypes.Count - 1].Remove();
+                rseSkillTypes.RemoveAt(rseSkillTypes.Count - 1);
+            }
+        }
+
+        //Vocation Buttons
         void btnAddNewVoc_Click(object sender, RoutedEventArgs e)
         {
             rseVocations.Add(new LabeledTextBox((StackPanel)this.FindName("stkVocations"), rseVocations.Count + ":"));
         }
 
+        void btnRemoveVoc_Click(object sender, RoutedEventArgs e)
+        {
+            if (rseVocations.Count > 0)
+            {
+                rseVocations[rseVocations.Count - 1].Remove();
+                rseVocations.RemoveAt(rseVocations.Count - 1);
+            }
+        }
+
+        //Proficiency Buttons
         void btnAddNewProf_Click(object sender, RoutedEventArgs e)
         {
             rseProficiencies.Add(new LabeledTextBox((StackPanel)this.FindName("stkProficiencies"), rseProficiencies.Count + ":"));
         }
 
+        void btnRemoveProf_Click(object sender, RoutedEventArgs e)
+        {
+            if (rseProficiencies.Count > 0)
+            {
+                rseProficiencies[rseProficiencies.Count - 1].Remove();
+                rseProficiencies.RemoveAt(rseProficiencies.Count - 1);
+            }
+        }
+
+        //Custom Field Buttons
         void btnAddNewCustomField_Click(object sender, RoutedEventArgs e)
         {
             rseCustomFields.Add(new RseCustomField((StackPanel)this.FindName("stkCustomFields"), rseCustomFields.Count));
+        }
+
+        void btnRemoveCustomField_Click(object sender, RoutedEventArgs e)
+        {
+            if (rseCustomFields.Count > 0)
+            {
+                rseCustomFields[rseCustomFields.Count - 1].Remove();
+                rseCustomFields.RemoveAt(rseCustomFields.Count - 1);
+            }
+        }
+
+        //Disabling Characteristic Buttons
+        void btnAddNewDisablingCharacteristic_Click(object sender, RoutedEventArgs e)
+        {
+            rseDisablingCharacteristics.Add(new RseDisablingCharacteristic((StackPanel)this.FindName("stkDisablingCharacteristics"), rseDisablingCharacteristics.Count));
+        }
+
+        void btnRemoveDisablingCharacteristic_Click(object sender, RoutedEventArgs e)
+        {
+            if (rseDisablingCharacteristics.Count > 0)
+            {
+                rseDisablingCharacteristics[rseDisablingCharacteristics.Count - 1].Remove();
+                rseDisablingCharacteristics.RemoveAt(rseDisablingCharacteristics.Count - 1);
+            }
         }
     }
 }

@@ -20,6 +20,8 @@ namespace CogentRP_Character_Builder
     /// </summary>
     public partial class MainWindow : Window
     {
+        Helpers.FileTracker fileTracker;
+
         public MainWindow()
         {
             InitializeComponent();

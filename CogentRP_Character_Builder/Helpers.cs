@@ -8,68 +8,75 @@ namespace CogentRP_Character_Builder
 {
     static class Helpers
     {
-        struct Ruleset
+        public struct Ruleset
         {
-            private struct SkillType
+            public struct SkillType
             {
-                private struct ActiveAttributes
-                {
-                    bool strength;
-                    bool reflex;
-                    bool intelligence;
-                }
-                string name;
-                ActiveAttributes activeAttributes;
-                string[] skills;
+                public string name;
+                public bool strength;
+                public bool reflex;
+                public bool intelligence;
+                public List<string> skills;
             }
 
-            struct CustomField
+            public struct CustomField
             {
-                string name;
-                int defaultVal;
-                bool fieldIsOptional;
+                public string name;
+                public int defaultVal;
+                public bool fieldIsOptional;
             }
 
-            struct DisablingCharacteristic
+            public struct DisablingCharacteristic
             {
-                private struct SkillTypeModifier
+                public struct SkillTypeModifier
                 {
-                    int skillTypeIndex;
-                    int diceReduction;
-                    int spCostMult;
+                    public int skillTypeIndex;
+                    public int diceReduction;
+                    public int spCostMult;
                 }
-                private struct SkillModifier
+                public struct SkillModifier
                 {
-                    int skillTypeIndex;
-                    int skillIndex;
-                    int diceReduction;
-                    int spCostMult;
+                    public int skillTypeIndex;
+                    public int skillIndex;
+                    public int diceReduction;
+                    public int spCostMult;
                 }
-                private struct CustomFieldModifier
+                public struct CustomFieldModifier
                 {
-                    int fieldIndex;
-                    int valMod;
-                    int spCostMult;
-                    bool disableField;
+                    public int fieldIndex;
+                    public int valMod;
+                    public bool disableField;
                 }
-                
-                string name;
-                int spVal;
-                SkillTypeModifier[] skillTypeModifiers;
-                SkillModifier[] skillModifiers;
-                CustomFieldModifier[] customFieldModifiers;
+
+                public string name;
+                public int spVal;
+                public List<SkillTypeModifier> skillTypeModifiers;
+                public List<SkillModifier> skillModifiers;
+                public List<CustomFieldModifier> customFieldModifiers;
             }
 
-            string name;
-            int attPoints;
-            int skillPoints;
-            int spIntel;
-            int destPoints;
-            SkillType[] skillTypes;
-            string[] vocations;
-            string[] proficiencies;
-            CustomField[] customFields;
-            DisablingCharacteristic[] disablingCharacteristics;
+            public string name;
+            public int attPoints;
+            public int skillPoints;
+            public int spIntel;
+            public int destPoints;
+            public List<SkillType> skillTypes;
+            public List<string> vocations;
+            public List<string> proficiencies;
+            public List<CustomField> customFields;
+            public List<DisablingCharacteristic> disablingCharacteristics;
+        }
+
+        public struct FileInfo
+        {
+            string fileFame;
+            string editorName;
+        }
+
+        public struct FileTracker
+        {
+            List<FileInfo> ruleFiles;
+            List<FileInfo> characterFiles;
         }
     }
 }

@@ -5,7 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:CogentRP_Character_Builder"
         mc:Ignorable="d"
-        Title="Ruleset Editor" Height="450" Width="300" MinWidth="300">
+        Title="Ruleset Editor" Height="600" Width="400" MinWidth="400">
     <Grid>
         <Grid.RowDefinitions>
             <RowDefinition Height="21"/>
@@ -14,8 +14,7 @@
         <DockPanel>
             <Menu DockPanel.Dock="Top">
                 <MenuItem Header="_File">
-                    <MenuItem Header="_Save"/>
-                    <MenuItem Header="_Save As" Click="saveAs_Click"/>
+                    <MenuItem Header="_Save" Click="save_Click"/>
                     <MenuItem Header="_Export"/>
                     <Separator/>
                     <MenuItem Header="_Exit"/>
@@ -49,14 +48,21 @@
                     <Label Content="Destiny Points:" Height="22" HorizontalAlignment="Left" Padding="5,0" VerticalContentAlignment="Center"/>
                     <TextBox x:Name="tbDestPoints" TextWrapping="Wrap" Text="3" Grid.Column="1" Margin="93,0,5,0"/>
                 </Grid>
-                
+
                 <Separator/>
 
                 <Label Content="Skill Types:"/>
                 <StackPanel x:Name="stkSkillTypes" Margin="40,0,0,0">
                     <Separator/>
                 </StackPanel>
-                <Button x:Name="btnAddNewST" Click="btnAddNewST_Click" Content="Add New" Width="75"/>
+                <Grid>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="1*"/>
+                        <ColumnDefinition Width="1*"/>
+                    </Grid.ColumnDefinitions>
+                    <Button x:Name="btnAddNewST" Click="btnAddNewST_Click" Content="Add New" Width="75"/>
+                    <Button x:Name="btnRemoveST" Click="btnRemoveST_Click" Content="Remove" Grid.Column="1" Width="75"/>
+                </Grid>
 
                 <Separator/>
 
@@ -64,7 +70,14 @@
                 <StackPanel x:Name="stkVocations" Margin="40,0,0,0">
                     <Separator/>
                 </StackPanel>
-                <Button x:Name="btnAddNewVoc" Click="btnAddNewVoc_Click" Content="Add New" Width="75"/>
+                <Grid>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="1*"/>
+                        <ColumnDefinition Width="1*"/>
+                    </Grid.ColumnDefinitions>
+                    <Button x:Name="btnAddNewVoc" Click="btnAddNewVoc_Click" Content="Add New" Width="75"/>
+                    <Button x:Name="btnRemoveVoc" Click="btnRemoveVoc_Click" Content="Remove" Grid.Column="1" Width="75"/>
+                </Grid>
 
                 <Separator/>
 
@@ -72,7 +85,14 @@
                 <StackPanel x:Name="stkProficiencies" Margin="40,0,0,0">
                     <Separator/>
                 </StackPanel>
-                <Button x:Name="btnAddNewProf" Click="btnAddNewProf_Click" Content="Add New" Width="75"/>
+                <Grid>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="1*"/>
+                        <ColumnDefinition Width="1*"/>
+                    </Grid.ColumnDefinitions>
+                    <Button x:Name="btnAddNewProf" Click="btnAddNewProf_Click" Content="Add New" Width="75"/>
+                    <Button x:Name="btnRemoveProf" Click="btnRemoveProf_Click" Content="Remove" Grid.Column="1" Width="75"/>
+                </Grid>
 
                 <Separator/>
 
@@ -80,7 +100,29 @@
                 <StackPanel x:Name="stkCustomFields" Margin="40,0,0,0">
                     <Separator/>
                 </StackPanel>
-                <Button x:Name="btnAddNewCustomField" Click="btnAddNewCustomField_Click" Content="Add New" Width="75"/>
+                <Grid>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="1*"/>
+                        <ColumnDefinition Width="1*"/>
+                    </Grid.ColumnDefinitions>
+                    <Button x:Name="btnAddNewCustomField" Click="btnAddNewCustomField_Click" Content="Add New" Width="75"/>
+                    <Button x:Name="btnRemoveCustomField" Click="btnRemoveCustomField_Click" Content="Remove" Grid.Column="1" Width="75"/>
+                </Grid>
+
+                <Separator/>
+
+                <Label Content="Disabling Characteristics:"/>
+                <StackPanel x:Name="stkDisablingCharacteristics" Margin="40,0,0,0">
+                    <Separator/>
+                </StackPanel>
+                <Grid>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="1*"/>
+                        <ColumnDefinition Width="1*"/>
+                    </Grid.ColumnDefinitions>
+                    <Button x:Name="btnAddNewDisablingCharacteristic" Click="btnAddNewDisablingCharacteristic_Click" Content="Add New" Width="75"/>
+                    <Button x:Name="btnRemoveDisablingCharacteristic" Click="btnRemoveDisablingCharacteristic_Click" Content="Remove" Grid.Column="1" Width="75"/>
+                </Grid>
             </StackPanel>
         </ScrollViewer>
     </Grid>
