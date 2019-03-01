@@ -186,9 +186,9 @@ namespace CogentRP_Character_Builder
             /// <summary>
             /// Gets or sets whether the checkbox is checked.
             /// </summary>
-            public bool? IsChecked
+            public bool IsChecked
             {
-                get { return checkBox.IsChecked; }
+                get { return (bool)checkBox.IsChecked; }
                 set { checkBox.IsChecked = value; }
             }
         }
@@ -369,7 +369,7 @@ namespace CogentRP_Character_Builder
             /// <summary>
             /// Gets or sets whether the strength CheckBox is checked.
             /// </summary>
-            public bool? Strength
+            public bool Strength
             {
                 get { return strength.IsChecked; }
                 set { strength.IsChecked = value; }
@@ -378,7 +378,7 @@ namespace CogentRP_Character_Builder
             /// <summary>
             /// Gets or sets whether the reflex CheckBox is checked.
             /// </summary>
-            public bool? Reflex
+            public bool Reflex
             {
                 get { return reflex.IsChecked; }
                 set { reflex.IsChecked = value; }
@@ -387,7 +387,7 @@ namespace CogentRP_Character_Builder
             /// <summary>
             /// Gets or sets whether the intelligence CheckBox is checked.
             /// </summary>
-            public bool? Intelligence
+            public bool Intelligence
             {
                 get { return intelligence.IsChecked; }
                 set { intelligence.IsChecked = value; }
@@ -468,6 +468,37 @@ namespace CogentRP_Character_Builder
                 parent.Children.Remove(fieldPanel);
                 parent.Children.Remove(separator);
             }
+
+            //--------------------------------------------
+            //Properties
+            //--------------------------------------------
+
+            /// <summary>
+            /// Gets or sets the contents of the Name TextBox.
+            /// </summary>
+            public string Name
+            {
+                get { return name.Text; }
+                set { name.Text = value; }
+            }
+
+            /// <summary>
+            /// Gets or sets the contents of the Default Value TextBox.
+            /// </summary>
+            public string DefaultValue
+            {
+                get { return defVal.Text; }
+                set { defVal.Text = value; }
+            }
+
+            /// <summary>
+            /// Gets or sets whether the strength CheckBox is checked.
+            /// </summary>
+            public bool IsOptional
+            {
+                get { return isOptional.IsChecked; }
+                set { isOptional.IsChecked = value; }
+            }
         }
 
         /// <summary>
@@ -479,7 +510,7 @@ namespace CogentRP_Character_Builder
             /// <summary>
             /// A block of UI elements within an RseDisablingCharacteristic representing modifiers to a specific Skill Type.
             /// </summary>
-            private class RseSkillTypeModifier
+            public class RseSkillTypeModifier
             {
                 //--------------------------------------------
                 //Variables
@@ -541,12 +572,43 @@ namespace CogentRP_Character_Builder
                     parent.Children.Remove(modPanel);
                     parent.Children.Remove(separator);
                 }
+
+                //--------------------------------------------
+                //Properties
+                //--------------------------------------------
+
+                /// <summary>
+                /// Gets or sets the contents of the Skill Type Index TextBox.
+                /// </summary>
+                public string SkillTypeIndex
+                {
+                    get { return typeIndex.Text; }
+                    set { typeIndex.Text = value; }
+                }
+
+                /// <summary>
+                /// Gets or sets the contents of the Dice Reduction TextBox.
+                /// </summary>
+                public string DiceReduction
+                {
+                    get { return diceReduction.Text; }
+                    set { diceReduction.Text = value; }
+                }
+
+                /// <summary>
+                /// Gets or sets the contents of the Skill Point Cost Multiplier TextBox.
+                /// </summary>
+                public string SkillPointCostMultiplier
+                {
+                    get { return spCostMult.Text; }
+                    set { spCostMult.Text = value; }
+                }
             }
 
             /// <summary>
             /// A block of UI elements within an RseDisablingCharacteristic representing modifiers to a specific Skill within a SkillType. 
             /// </summary>
-            private class RseSkillModifier
+            public class RseSkillModifier
             {
                 //--------------------------------------------
                 //Variables
@@ -612,12 +674,52 @@ namespace CogentRP_Character_Builder
                     parent.Children.Remove(modPanel);
                     parent.Children.Remove(separator);
                 }
+
+                //--------------------------------------------
+                //Properties
+                //--------------------------------------------
+
+                /// <summary>
+                /// Gets or sets the contents of the Skill Type Index TextBox.
+                /// </summary>
+                public string SkillTypeIndex
+                {
+                    get { return typeIndex.Text; }
+                    set { typeIndex.Text = value; }
+                }
+
+                /// <summary>
+                /// Gets or sets the contents of the Skill Index TextBox.
+                /// </summary>
+                public string SkillIndex
+                {
+                    get { return skillIndex.Text; }
+                    set { skillIndex.Text = value; }
+                }
+
+                /// <summary>
+                /// Gets or sets the contents of the Dice Reduction TextBox.
+                /// </summary>
+                public string DiceReduction
+                {
+                    get { return diceReduction.Text; }
+                    set { diceReduction.Text = value; }
+                }
+
+                /// <summary>
+                /// Gets or sets the contents of the Skill Point Cost Multiplier TextBox.
+                /// </summary>
+                public string SkillPointCostMultiplier
+                {
+                    get { return spCostMult.Text; }
+                    set { spCostMult.Text = value; }
+                }
             }
 
             /// <summary>
             /// A block of UI elements within an RseDisablingCharacteristic representing modifiers to a CustomField.
             /// </summary>
-            private class RseCustomFieldModifier
+            public class RseCustomFieldModifier
             {
                 //--------------------------------------------
                 //Variables
@@ -678,6 +780,37 @@ namespace CogentRP_Character_Builder
                     parent.Children.Remove(modNum);
                     parent.Children.Remove(modPanel);
                     parent.Children.Remove(separator);
+                }
+
+                //--------------------------------------------
+                //Properties
+                //--------------------------------------------
+
+                /// <summary>
+                /// Gets or sets the contents of the Custom Field Index TextBox.
+                /// </summary>
+                public string CustomFieldIndex
+                {
+                    get { return fieldIndex.Text; }
+                    set { fieldIndex.Text = value; }
+                }
+
+                /// <summary>
+                /// Gets or sets the contents of the Value Modifier TextBox.
+                /// </summary>
+                public string ValueModifier
+                {
+                    get { return valMod.Text; }
+                    set { valMod.Text = value; }
+                }
+
+                /// <summary>
+                /// Gets or sets whether the strength CheckBox is checked.
+                /// </summary>
+                public bool DisableField
+                {
+                    get { return disableField.IsChecked; }
+                    set { disableField.IsChecked = value; }
                 }
             }
             #endregion
@@ -815,12 +948,12 @@ namespace CogentRP_Character_Builder
                 skillTypeModButtonGrid.ColumnDefinitions.Add(new ColumnDefinition());
                 skillTypeModButtonGrid.Children.Add(addSkillTypeModButton);
                 skillTypeModButtonGrid.Children.Add(removeSkillTypeModButton);
-                
+
                 addSkillTypeModButton.Width = 75;
                 addSkillTypeModButton.Content = "Add New";
                 addSkillTypeModButton.Click += btnAddSkillTypeMod_Click;
                 Grid.SetColumn(addSkillTypeModButton, 0);
-                
+
                 removeSkillTypeModButton.Width = 75;
                 removeSkillTypeModButton.Content = "Remove";
                 removeSkillTypeModButton.Click += btnRemoveSkillTypeMod_Click;
@@ -914,6 +1047,55 @@ namespace CogentRP_Character_Builder
                 rseCustomFieldModifiers[rseCustomFieldModifiers.Count - 1].Remove();
                 rseCustomFieldModifiers.RemoveAt(rseCustomFieldModifiers.Count - 1);
             }
+
+            //--------------------------------------------
+            //Properties
+            //--------------------------------------------
+
+            /// <summary>
+            /// Gets or sets the contents of the Name TextBox.
+            /// </summary>
+            public string Name
+            {
+                get { return name.Text; }
+                set { name.Text = value; }
+            }
+
+            /// <summary>
+            /// Gets or sets the contents of the Default Value TextBox.
+            /// </summary>
+            public string SkillPointValue
+            {
+                get { return spVal.Text; }
+                set { spVal.Text = value; }
+            }
+
+            /// <summary>
+            /// Gets or sets the rseSkillTypeModifiers List.
+            /// </summary>
+            public List<RseSkillTypeModifier> SkillTypeModifiers
+            {
+                get { return rseSkillTypeModifiers; }
+                set { rseSkillTypeModifiers = value; }
+            }
+
+            /// <summary>
+            /// Gets or sets the rseSkillModifiers List.
+            /// </summary>
+            public List<RseSkillModifier> SkillModifiers
+            {
+                get { return rseSkillModifiers; }
+                set { rseSkillModifiers = value; }
+            }
+
+            /// <summary>
+            /// Gets or sets the rseCustomFieldModifiers List.
+            /// </summary>
+            public List<RseCustomFieldModifier> CustomFieldModifiers
+            {
+                get { return rseCustomFieldModifiers; }
+                set { rseCustomFieldModifiers = value; }
+            }
         }
         #endregion
 
@@ -958,30 +1140,318 @@ namespace CogentRP_Character_Builder
                 return;
             }
 
-            if (((TextBox)this.FindName("tbAttPoints")).Text.Length > 0 && !int.TryParse(((TextBox)this.FindName("tbAttPoints")).Text, out ruleset.attPoints))
+            if (((TextBox)this.FindName("tbAttPoints")).Text.Length > 0)
+            {
+                if (!int.TryParse(((TextBox)this.FindName("tbAttPoints")).Text, out ruleset.attPoints))
+                {
+                    return;
+                }
+            }
+            else
             {
                 return;
             }
 
-            if (((TextBox)this.FindName("tbSkillPoints")).Text.Length > 0 && !int.TryParse(((TextBox)this.FindName("tbSkillPoints")).Text, out ruleset.skillPoints))
+            if (((TextBox)this.FindName("tbSkillPoints")).Text.Length > 0)
+            {
+                if (!int.TryParse(((TextBox)this.FindName("tbSkillPoints")).Text, out ruleset.skillPoints))
+                {
+                    return;
+                }
+            }
+            else
             {
                 return;
             }
 
-            if (((TextBox)this.FindName("tbSpInt")).Text.Length > 0 && !int.TryParse(((TextBox)this.FindName("tbSpInt")).Text, out ruleset.attPoints))
+            if (((TextBox)this.FindName("tbSPInt")).Text.Length > 0)
+            {
+                if (!int.TryParse(((TextBox)this.FindName("tbSPInt")).Text, out ruleset.spIntel))
+                {
+                    return;
+                }
+            }
+            else
             {
                 return;
             }
 
-            if (((TextBox)this.FindName("tbDestPoints")).Text.Length > 0 && !int.TryParse(((TextBox)this.FindName("tbDestPoints")).Text, out ruleset.attPoints))
+            if (((TextBox)this.FindName("tbDestPoints")).Text.Length > 0)
+            {
+                if (!int.TryParse(((TextBox)this.FindName("tbDestPoints")).Text, out ruleset.destPoints))
+                {
+                    return;
+                }
+            }
+            else
             {
                 return;
             }
 
-            for(int i = 0; i < rseSkillTypes.Count; i++)
+            List<Helpers.Ruleset.SkillType> tempSTList = new List<Helpers.Ruleset.SkillType>();
+            for (int i = 0; i < rseSkillTypes.Count; i++)
             {
-                ruleset.skillTypes.Add(new Helpers.Ruleset.SkillType());
+                Helpers.Ruleset.SkillType tempSkillType = new Helpers.Ruleset.SkillType();
+
+                if (rseSkillTypes[i].Name.Length > 0)
+                {
+                    tempSkillType.name = rseSkillTypes[i].Name;
+                }
+                else
+                {
+                    return;
+                }
+
+                tempSkillType.strength = rseSkillTypes[i].Strength;
+                tempSkillType.reflex = rseSkillTypes[i].Reflex;
+                tempSkillType.intelligence = rseSkillTypes[i].Intelligence;
+
+                List<string> tempSkillList = new List<string>();
+                for (int j = 0; j < rseSkillTypes[i].Skills.Count; j++)
+                {
+                    if (rseSkillTypes[i].Skills[j].Text.Length > 0)
+                    {
+                        tempSkillList.Add(rseSkillTypes[i].Skills[j].Text);
+                    }
+                    else
+                    {
+                        return;
+                    }
+                }
+                tempSkillType.skills = tempSkillList;
+
+                tempSTList.Add(tempSkillType);
             }
+            ruleset.skillTypes = tempSTList;
+
+            List<string> tempVocList = new List<string>();
+            for (int i = 0; i < rseVocations.Count; i++)
+            {
+                if (rseVocations[i].Text.Length > 0)
+                {
+                    tempVocList.Add(rseVocations[i].Text);
+                }
+                else
+                {
+                    return;
+                }
+            }
+            ruleset.vocations = tempVocList;
+
+            List<string> tempProfList = new List<string>();
+            for (int i = 0; i < rseProficiencies.Count; i++)
+            {
+                if (rseProficiencies[i].Text.Length > 0)
+                {
+                    tempProfList.Add(rseProficiencies[i].Text);
+                }
+                else
+                {
+                    return;
+                }
+            }
+            ruleset.proficiencies = tempProfList;
+
+            List<Helpers.Ruleset.CustomField> tempCFList = new List<Helpers.Ruleset.CustomField>();
+            for (int i = 0; i < rseCustomFields.Count; i++)
+            {
+                Helpers.Ruleset.CustomField tempCustField = new Helpers.Ruleset.CustomField();
+
+                if (rseCustomFields[i].Name.Length > 0)
+                {
+                    tempCustField.name = rseCustomFields[i].Name;
+                }
+                else
+                {
+                    return;
+                }
+
+                if (rseCustomFields[i].DefaultValue.Length > 0)
+                {
+                    if (!int.TryParse(rseCustomFields[i].DefaultValue, out tempCustField.defaultVal))
+                    {
+                        return;
+                    }
+                }
+                else
+                {
+                    return;
+                }
+
+                tempCustField.fieldIsOptional = rseCustomFields[i].IsOptional;
+
+                tempCFList.Add(tempCustField);
+            }
+            ruleset.customFields = tempCFList;
+
+            List<Helpers.Ruleset.DisablingCharacteristic> tempDCList = new List<Helpers.Ruleset.DisablingCharacteristic>();
+            for (int i = 0; i < rseDisablingCharacteristics.Count; i++)
+            {
+                Helpers.Ruleset.DisablingCharacteristic tempDisChar = new Helpers.Ruleset.DisablingCharacteristic();
+
+                if (rseDisablingCharacteristics[i].Name.Length > 0)
+                {
+                    tempDisChar.name = rseDisablingCharacteristics[i].Name;
+                }
+                else
+                {
+                    return;
+                }
+
+                if (rseDisablingCharacteristics[i].SkillPointValue.Length > 0)
+                {
+                    if (!int.TryParse(rseDisablingCharacteristics[i].SkillPointValue, out tempDisChar.spVal))
+                    {
+                        return;
+                    }
+                }
+                else
+                {
+                    return;
+                }
+
+                List<Helpers.Ruleset.DisablingCharacteristic.SkillTypeModifier> tempTypeModList = new List<Helpers.Ruleset.DisablingCharacteristic.SkillTypeModifier>();
+                for (int j = 0; j < rseDisablingCharacteristics[i].SkillTypeModifiers.Count; j++)
+                {
+                    Helpers.Ruleset.DisablingCharacteristic.SkillTypeModifier tempTypeMod = new Helpers.Ruleset.DisablingCharacteristic.SkillTypeModifier();
+
+                    if (rseDisablingCharacteristics[i].SkillTypeModifiers[j].SkillTypeIndex.Length > 0)
+                    {
+                        if (!int.TryParse(rseDisablingCharacteristics[i].SkillTypeModifiers[j].SkillTypeIndex, out tempTypeMod.skillTypeIndex))
+                        {
+                            return;
+                        }
+                    }
+                    else
+                    {
+                        return;
+                    }
+
+                    if (rseDisablingCharacteristics[i].SkillTypeModifiers[j].DiceReduction.Length > 0)
+                    {
+                        if (!int.TryParse(rseDisablingCharacteristics[i].SkillTypeModifiers[j].DiceReduction, out tempTypeMod.diceReduction))
+                        {
+                            return;
+                        }
+                    }
+                    else
+                    {
+                        return;
+                    }
+
+                    if (rseDisablingCharacteristics[i].SkillTypeModifiers[j].SkillPointCostMultiplier.Length > 0)
+                    {
+                        if (!int.TryParse(rseDisablingCharacteristics[i].SkillTypeModifiers[j].SkillPointCostMultiplier, out tempTypeMod.spCostMult))
+                        {
+                            return;
+                        }
+                    }
+                    else
+                    {
+                        return;
+                    }
+
+                    tempTypeModList.Add(tempTypeMod);
+                }
+                tempDisChar.skillTypeModifiers = tempTypeModList;
+
+                List<Helpers.Ruleset.DisablingCharacteristic.SkillModifier> tempSkillModList = new List<Helpers.Ruleset.DisablingCharacteristic.SkillModifier>();
+                for (int j = 0; j < rseDisablingCharacteristics[i].SkillModifiers.Count; j++)
+                {
+                    Helpers.Ruleset.DisablingCharacteristic.SkillModifier tempSkillMod = new Helpers.Ruleset.DisablingCharacteristic.SkillModifier();
+
+                    if (rseDisablingCharacteristics[i].SkillModifiers[j].SkillTypeIndex.Length > 0)
+                    {
+                        if (!int.TryParse(rseDisablingCharacteristics[i].SkillModifiers[j].SkillTypeIndex, out tempSkillMod.skillTypeIndex))
+                        {
+                            return;
+                        }
+                    }
+                    else
+                    {
+                        return;
+                    }
+
+                    if (rseDisablingCharacteristics[i].SkillModifiers[j].SkillIndex.Length > 0)
+                    {
+                        if (!int.TryParse(rseDisablingCharacteristics[i].SkillModifiers[j].SkillIndex, out tempSkillMod.skillIndex))
+                        {
+                            return;
+                        }
+                    }
+                    else
+                    {
+                        return;
+                    }
+
+                    if (rseDisablingCharacteristics[i].SkillModifiers[j].DiceReduction.Length > 0)
+                    {
+                        if (!int.TryParse(rseDisablingCharacteristics[i].SkillModifiers[j].DiceReduction, out tempSkillMod.diceReduction))
+                        {
+                            return;
+                        }
+                    }
+                    else
+                    {
+                        return;
+                    }
+
+                    if (rseDisablingCharacteristics[i].SkillModifiers[j].SkillPointCostMultiplier.Length > 0)
+                    {
+                        if (!int.TryParse(rseDisablingCharacteristics[i].SkillModifiers[j].SkillPointCostMultiplier, out tempSkillMod.spCostMult))
+                        {
+                            return;
+                        }
+                    }
+                    else
+                    {
+                        return;
+                    }
+
+                    tempSkillModList.Add(tempSkillMod);
+                }
+                tempDisChar.skillModifiers = tempSkillModList;
+
+                List<Helpers.Ruleset.DisablingCharacteristic.CustomFieldModifier> tempCFModList = new List<Helpers.Ruleset.DisablingCharacteristic.CustomFieldModifier>();
+                for(int j = 0; j < rseDisablingCharacteristics[i].CustomFieldModifiers.Count; j++)
+                {
+                    Helpers.Ruleset.DisablingCharacteristic.CustomFieldModifier tempCustFieldMod = new Helpers.Ruleset.DisablingCharacteristic.CustomFieldModifier();
+                    
+                    if (rseDisablingCharacteristics[i].CustomFieldModifiers[j].CustomFieldIndex.Length > 0)
+                    {
+                        if (!int.TryParse(rseDisablingCharacteristics[i].CustomFieldModifiers[j].CustomFieldIndex, out tempCustFieldMod.fieldIndex))
+                        {
+                            return;
+                        }
+                    }
+                    else
+                    {
+                        return;
+                    }
+
+                    if (rseDisablingCharacteristics[i].CustomFieldModifiers[j].ValueModifier.Length > 0)
+                    {
+                        if (!int.TryParse(rseDisablingCharacteristics[i].CustomFieldModifiers[j].ValueModifier, out tempCustFieldMod.valMod))
+                        {
+                            return;
+                        }
+                    }
+                    else
+                    {
+                        return;
+                    }
+
+                    tempCustFieldMod.disableField = rseDisablingCharacteristics[i].CustomFieldModifiers[j].DisableField;
+
+                    tempCFModList.Add(tempCustFieldMod);
+                }
+                tempDisChar.customFieldModifiers = tempCFModList;
+
+                tempDCList.Add(tempDisChar);
+            }
+            ruleset.disablingCharacteristics = tempDCList;
+
+            string output = JsonConvert.SerializeObject(ruleset);
         }
 
         //--------------------------------------------
