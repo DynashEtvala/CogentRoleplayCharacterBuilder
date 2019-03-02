@@ -33,7 +33,7 @@
 
         <ListBox HorizontalAlignment="Left" Height="339" Margin="10,10,0,0" VerticalAlignment="Top" Width="377" Grid.Row="1"/>
         <Button x:Name="btnNewRules" Click="btnNewRules_Click" Content="New" HorizontalAlignment="Left" Margin="10,0,0,10" Width="75" Grid.Row="2" Height="22" VerticalAlignment="Bottom"/>
-        <Button x:Name="btnEditRules" Content="Edit" Margin="0,0,90,10" VerticalAlignment="Bottom" HorizontalAlignment="Right" Width="75" Grid.Row="2" Height="22"/>
+        <Button x:Name="btnEditRules" Click="btnEditRules_Click" Content="Edit" Margin="0,0,90,10" VerticalAlignment="Bottom" HorizontalAlignment="Right" Width="75" Grid.Row="2" Height="22"/>
         <Button x:Name="btnDeleteRules" Content="Delete" Margin="0,0,10,10" VerticalAlignment="Bottom" HorizontalAlignment="Right" Width="75" Grid.Row="2" Height="22"/>
 
         <ListBox HorizontalAlignment="Left" Height="339" Margin="10,10,0,0" VerticalAlignment="Top" Width="377" Grid.Row="1" Grid.Column="1"/>

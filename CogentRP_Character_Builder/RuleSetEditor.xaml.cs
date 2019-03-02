@@ -11,6 +11,7 @@ using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
+using System.IO;
 using Newtonsoft.Json;
 
 namespace CogentRP_Character_Builder
@@ -333,6 +334,11 @@ namespace CogentRP_Character_Builder
                 parent.Children.Remove(separator3);
             }
 
+            public void AddSkill()
+            {
+                skillList.Add(new LabeledTextBox(skillPanel, skillList.Count + ":"));
+            }
+
             //--------------------------------------------
             //Button Functions
             //--------------------------------------------
@@ -342,9 +348,9 @@ namespace CogentRP_Character_Builder
             /// </summary>
             /// <param name="sender"></param>
             /// <param name="e"></param>
-            private void btnAddSkill_Click(object sender, RoutedEventArgs e)
+            public void btnAddSkill_Click(object sender, RoutedEventArgs e)
             {
-                skillList.Add(new LabeledTextBox(skillPanel, skillList.Count + ":"));
+                AddSkill();
             }
 
             private void btnRemoveSkill_Click(object sender, RoutedEventArgs e)
@@ -1008,6 +1014,21 @@ namespace CogentRP_Character_Builder
                 parent.Children.Remove(separator4);
             }
 
+            public void AddSkillTypeMod()
+            {
+                rseSkillTypeModifiers.Add(new RseSkillTypeModifier(skillTypeModPanel, rseSkillTypeModifiers.Count));
+            }
+
+            public void AddSkillMod()
+            {
+                rseSkillModifiers.Add(new RseSkillModifier(skillModPanel, rseSkillModifiers.Count));
+            }
+
+            public void AddCustomFieldMod()
+            {
+                rseCustomFieldModifiers.Add(new RseCustomFieldModifier(customFieldModPanel, rseCustomFieldModifiers.Count));
+            }
+
             //--------------------------------------------
             //Button Functions
             //--------------------------------------------
@@ -1015,7 +1036,7 @@ namespace CogentRP_Character_Builder
             //SkillTypeMod
             private void btnAddSkillTypeMod_Click(object sender, RoutedEventArgs e)
             {
-                rseSkillTypeModifiers.Add(new RseSkillTypeModifier(skillTypeModPanel, rseSkillTypeModifiers.Count));
+                AddSkillTypeMod();
             }
 
             private void btnRemoveSkillTypeMod_Click(object sender, RoutedEventArgs e)
@@ -1027,7 +1048,7 @@ namespace CogentRP_Character_Builder
             //SkillMod
             private void btnAddSkillMod_Click(object sender, RoutedEventArgs e)
             {
-                rseSkillModifiers.Add(new RseSkillModifier(skillModPanel, rseSkillModifiers.Count));
+                AddSkillMod();
             }
 
             private void btnRemoveSkillMod_Click(object sender, RoutedEventArgs e)
@@ -1039,7 +1060,7 @@ namespace CogentRP_Character_Builder
             //CustomFieldMod
             private void btnAddCustomFieldMod_Click(object sender, RoutedEventArgs e)
             {
-                rseCustomFieldModifiers.Add(new RseCustomFieldModifier(customFieldModPanel, rseCustomFieldModifiers.Count));
+                AddCustomFieldMod();
             }
 
             private void btnRemoveCustomFieldMod_Click(object sender, RoutedEventArgs e)
@@ -1121,6 +1142,97 @@ namespace CogentRP_Character_Builder
             rseProficiencies = new List<LabeledTextBox>();
             rseCustomFields = new List<RseCustomField>();
             rseDisablingCharacteristics = new List<RseDisablingCharacteristic>();
+        }
+
+        public RuleSetEditor(string filePath)
+        {
+            InitializeComponent();
+            rseSkillTypes = new List<RseSkillType>();
+            rseVocations = new List<LabeledTextBox>();
+            rseProficiencies = new List<LabeledTextBox>();
+            rseCustomFields = new List<RseCustomField>();
+            rseDisablingCharacteristics = new List<RseDisablingCharacteristic>();
+
+            string text = File.ReadAllText(filePath);
+
+            Helpers.Ruleset ruleset = JsonConvert.DeserializeObject<Helpers.Ruleset>(text);
+
+            ((TextBox)this.FindName("tbName")).Text = ruleset.name;
+            ((TextBox)this.FindName("tbAttPoints")).Text = ruleset.attPoints.ToString();
+            ((TextBox)this.FindName("tbSkillPoints")).Text = ruleset.skillPoints.ToString();
+            ((TextBox)this.FindName("tbSPInt")).Text = ruleset.spIntel.ToString();
+            ((TextBox)this.FindName("tbDestPoints")).Text = ruleset.destPoints.ToString();
+
+            for (int i = 0; i < ruleset.skillTypes.Count; i++)
+            {
+                rseSkillTypes.Add(new RseSkillType((StackPanel)this.FindName("stkSkillTypes"), rseSkillTypes.Count));
+
+                rseSkillTypes[i].Name = ruleset.skillTypes[i].name;
+                rseSkillTypes[i].Strength = ruleset.skillTypes[i].strength;
+                rseSkillTypes[i].Reflex = ruleset.skillTypes[i].reflex;
+                rseSkillTypes[i].Intelligence = ruleset.skillTypes[i].intelligence;
+                for (int j = 0; j < ruleset.skillTypes[i].skills.Count; j++)
+                {
+                    rseSkillTypes[i].AddSkill();
+                    rseSkillTypes[i].Skills[j].Text = ruleset.skillTypes[i].skills[i];
+                }
+            }
+
+            for (int i = 0; i < ruleset.vocations.Count; i++)
+            {
+                rseVocations.Add(new LabeledTextBox((StackPanel)this.FindName("stkVocations"), rseVocations.Count + ":"));
+
+                rseVocations[i].Text = ruleset.vocations[i];
+            }
+
+            for (int i = 0; i < ruleset.proficiencies.Count; i++)
+            {
+                rseProficiencies.Add(new LabeledTextBox((StackPanel)this.FindName("stkProficiencies"), rseProficiencies.Count + ":"));
+
+                rseProficiencies[i].Text = ruleset.proficiencies[i];
+            }
+
+            for (int i = 0; i < ruleset.customFields.Count; i++)
+            {
+                rseCustomFields.Add(new RseCustomField((StackPanel)this.FindName("stkCustomFields"), rseCustomFields.Count));
+
+                rseCustomFields[i].Name = ruleset.customFields[i].name;
+                rseCustomFields[i].DefaultValue = ruleset.customFields[i].defaultVal.ToString();
+                rseCustomFields[i].IsOptional = ruleset.customFields[i].fieldIsOptional;
+            }
+
+            for (int i = 0; i < ruleset.disablingCharacteristics.Count; i++)
+            {
+                rseDisablingCharacteristics.Add(new RseDisablingCharacteristic((StackPanel)this.FindName("stkDisablingCharacteristics"), rseDisablingCharacteristics.Count));
+
+                rseDisablingCharacteristics[i].Name = ruleset.disablingCharacteristics[i].name;
+                rseDisablingCharacteristics[i].SkillPointValue = ruleset.disablingCharacteristics[i].spVal.ToString();
+                for (int j = 0; j < ruleset.disablingCharacteristics[i].skillTypeModifiers.Count; j++)
+                {
+                    rseDisablingCharacteristics[i].AddSkillTypeMod();
+
+                    rseDisablingCharacteristics[i].SkillTypeModifiers[j].SkillTypeIndex = ruleset.disablingCharacteristics[i].skillTypeModifiers[j].skillTypeIndex.ToString();
+                    rseDisablingCharacteristics[i].SkillTypeModifiers[j].DiceReduction = ruleset.disablingCharacteristics[i].skillTypeModifiers[j].diceReduction.ToString();
+                    rseDisablingCharacteristics[i].SkillTypeModifiers[j].SkillPointCostMultiplier = ruleset.disablingCharacteristics[i].skillTypeModifiers[j].spCostMult.ToString();
+                }
+                for (int j = 0; j < ruleset.disablingCharacteristics[i].skillModifiers.Count; j++)
+                {
+                    rseDisablingCharacteristics[i].AddSkillMod();
+
+                    rseDisablingCharacteristics[i].SkillModifiers[j].SkillTypeIndex = ruleset.disablingCharacteristics[i].skillModifiers[j].skillTypeIndex.ToString();
+                    rseDisablingCharacteristics[i].SkillModifiers[j].SkillIndex = ruleset.disablingCharacteristics[i].skillModifiers[j].skillIndex.ToString();
+                    rseDisablingCharacteristics[i].SkillModifiers[j].DiceReduction = ruleset.disablingCharacteristics[i].skillModifiers[j].diceReduction.ToString();
+                    rseDisablingCharacteristics[i].SkillModifiers[j].SkillPointCostMultiplier = ruleset.disablingCharacteristics[i].skillModifiers[j].spCostMult.ToString();
+                }
+                for (int j = 0; j < ruleset.disablingCharacteristics[i].customFieldModifiers.Count; j++)
+                {
+                    rseDisablingCharacteristics[i].AddCustomFieldMod();
+
+                    rseDisablingCharacteristics[i].CustomFieldModifiers[j].CustomFieldIndex = ruleset.disablingCharacteristics[i].customFieldModifiers[j].fieldIndex.ToString();
+                    rseDisablingCharacteristics[i].CustomFieldModifiers[j].ValueModifier = ruleset.disablingCharacteristics[i].customFieldModifiers[j].valMod.ToString();
+                    rseDisablingCharacteristics[i].CustomFieldModifiers[j].DisableField = ruleset.disablingCharacteristics[i].customFieldModifiers[j].disableField;
+                }
+            }
         }
 
         //--------------------------------------------
@@ -1452,6 +1564,19 @@ namespace CogentRP_Character_Builder
             ruleset.disablingCharacteristics = tempDCList;
 
             string output = JsonConvert.SerializeObject(ruleset);
+
+            string filePath = @"Resources/RuleSets/Default.cgtr";
+
+            if (File.Exists(filePath))
+            {
+                File.Delete(filePath);
+            }
+
+            using(FileStream fs = File.Create(filePath))
+            {
+                byte[] info = new UTF8Encoding(true).GetBytes(output);
+                fs.Write(info, 0, info.Length);
+            }
         }
 
         //--------------------------------------------

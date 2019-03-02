@@ -32,5 +32,11 @@ namespace CogentRP_Character_Builder
             RuleSetEditor ruleSetEditor = new RuleSetEditor();
             ruleSetEditor.Show();
         }
+
+        void btnEditRules_Click(object sender, RoutedEventArgs e)
+        {
+            RuleSetEditor ruleSetEditor = new RuleSetEditor(@"Resources/RuleSets/Default.cgtr");
+            ruleSetEditor.Show();
+        }
     }
 }
